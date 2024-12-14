@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Blog de Animes{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="{% static 'js/script.js' %}" defer></script>
+  {% load static %}
+</head>
+<body>
+  <header class="header">
+    <div class="header__inner">
+      <h1 class="header__logo"><a href="/" class="logo">Blog de Animes</a></h1>
+      <nav class="nav" id="nav-menu">
+        <ul class="nav__list">
+          <li><a href="/" class="nav__link">Início</a></li>
+          <li><a href="{% url 'search_posts' %}" class="nav__link">Buscar</a></li>
+          <li><a href="#" class="nav__link">Categorias</a></li>
+          <li><a href="#" class="nav__link">Sobre</a></li>
+          {% if user.is_authenticated %}
+            <li class="nav__link">Olá, {{ user.username }}!</li>
+            <li><a href="{% url 'logout' %}" class="nav__link">Logout</a></li>
+          {% else %}
+            <li><a href="{% url 'login' %}" class="nav__link">Login</a></li>
+            <li><a href="{% url 'register' %}" class="nav__link">Registrar</a></li>
+          {% endif %}
+        </ul>
+      </nav>      
+      <button class="header__toggle" id="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+        ☾
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <p>&copy; {{ timezone.now|date:"Y" }} Blog de Animes - Todos os direitos reservados</p>
+  </footer>
+</body>
+</html>

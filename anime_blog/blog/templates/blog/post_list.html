@@ -1,0 +1,47 @@
+{% extends "blog/base.html" %}
+{% block title %}Início | Blog de Animes{% endblock %}
+{% block content %}
+
+<div class="search-bar">
+  <form method="get" action="{% url 'search_posts' %}" style="display:inline;">
+    <input type="text" name="q" placeholder="Buscar posts..." value="{{ request.GET.q|default_if_none:'' }}" aria-label="Buscar posts">
+    <button type="submit">Buscar</button>
+  </form>
+</div>
+
+<div class="posts-grid" id="posts-container">
+  {% for post in page_obj %}
+  <article class="post-card">
+    {% if post.cover_image %}
+      <div class="post-card__image">
+        <img src="{{ post.cover_image.url }}" alt="{{ post.title }}">
+      </div>
+    {% endif %}
+    <div class="post-card__content">
+      <h2 class="post-card__title">
+        <a href="{% url 'post_detail' post.pk %}" class="post-card__link">{{ post.title }}</a>
+      </h2>
+      <p class="post-card__meta">
+        Por {{ post.author }} em {{ post.created_at|date:"d/m/Y" }}
+      </p>
+      <p class="post-card__excerpt">{{ post.content|truncatewords:30 }}</p>
+    </div>
+  </article>
+  {% empty %}
+  <p>Nenhum post encontrado.</p>
+  {% endfor %}
+</div>
+
+<div class="pagination">
+  {% if page_obj.has_previous %}
+  <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+  {% endif %}
+  
+  <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+  
+  {% if page_obj.has_next %}
+  <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+  {% endif %}
+</div>
+
+{% endblock %}

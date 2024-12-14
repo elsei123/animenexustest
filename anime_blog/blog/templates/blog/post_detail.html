@@ -1,0 +1,41 @@
+{% extends "blog/base.html" %}
+{% block title %}{{ post.title }} | Blog de Animes{% endblock %}
+{% block content %}
+<article class="post-detail">
+  <h2 class="post-detail__title">{{ post.title }}</h2>
+  <p class="post-detail__meta">Por {{ post.author }} em {{ post.created_at|date:"d/m/Y H:i" }}</p>
+  {% if post.cover_image %}
+    <div class="post-detail__image">
+      <img src="{{ post.cover_image.url }}" alt="{{ post.title }}">
+    </div>
+  {% endif %}
+  <div class="post-detail__content">
+    {{ post.content|linebreaks }}
+  </div>
+</article>
+
+<section class="comments">
+  <h3>{{ comments|length }} Comentário(s)</h3>
+  <ul class="comment-list">
+    {% for comment in comments %}
+    <li class="comment-item">
+      <strong>{{ comment.name }}</strong> em {{ comment.created|date:"d/m/Y H:i" }}
+      <p>{{ comment.body|linebreaks }}</p>
+    </li>
+    {% empty %}
+    <li>Ainda não há comentários. Seja o primeiro!</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="comment-form">
+  <h3>Deixe um Comentário</h3>
+  <form method="post">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Seu nome" required><br><br>
+    <textarea name="body" rows="4" placeholder="Seu comentário" required></textarea><br><br>
+    <button type="submit">Enviar</button>
+  </form>
+</section>
+
+{% endblock %}
