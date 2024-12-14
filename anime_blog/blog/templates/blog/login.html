@@ -1,12 +1,17 @@
 {% extends "blog/base.html" %}
 {% block title %}Login | Blog de Animes{% endblock %}
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  <input type="text" name="username" placeholder="Usuário" required><br><br>
-  <input type="password" name="password" placeholder="Senha" required><br><br>
-  <button type="submit">Entrar</button>
-</form>
-<a href="{% url 'register' %}">Não tem conta? Registre-se</a>
+<!-- Container para a página de login com imagem de fundo -->
+<div class="auth-container" style="background-image: url('{% static 'images/login-background.jpg' %}');">
+  <div class="auth-form">
+    <h2>Login</h2>
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Usuário" required>
+      <input type="password" name="password" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <p>Não tem uma conta? <a href="{% url 'register' %}">Registre-se</a></p>
+  </div>
+</div>
 {% endblock %}

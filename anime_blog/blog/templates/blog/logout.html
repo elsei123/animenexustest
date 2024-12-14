@@ -1,6 +1,12 @@
 {% extends "blog/base.html" %}
 {% block title %}Logout | Blog de Animes{% endblock %}
 {% block content %}
-<h2>Você saiu da sua conta.</h2>
-<a href="{% url 'login' %}">Login</a> | <a href="/">Início</a>
+<!-- Container para a página de logout com imagem de fundo -->
+<div class="auth-container" style="background-image: url('{% static 'images/logout-background.jpg' %}');">
+  <div class="auth-form">
+    <h2>Logout</h2>
+    <p>Você saiu da sua conta.</p>
+    <a href="{% url 'login' %}">Login</a> | <a href="/">Início</a>
+  </div>
+</div>
 {% endblock %}

@@ -5,20 +5,21 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{% block title %}Blog de Animes{% endblock %}</title>
+  <!-- Estilos -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <script src="{% static 'js/script.js' %}" defer></script>
-  {% load static %}
 </head>
 <body>
+  <!-- Cabeçalho fixo com menu de navegação e toggle de tema -->
   <header class="header">
     <div class="header__inner">
+      <!-- Logo do site, clicando nele volta para a página inicial -->
       <h1 class="header__logo"><a href="/" class="logo">Blog de Animes</a></h1>
+      <!-- Menu principal: removemos Início e Todas Categorias, deixando apenas Sobre -->
       <nav class="nav" id="nav-menu">
         <ul class="nav__list">
-          <li><a href="/" class="nav__link">Início</a></li>
-          <li><a href="{% url 'search_posts' %}" class="nav__link">Buscar</a></li>
-          <li><a href="#" class="nav__link">Categorias</a></li>
-          <li><a href="#" class="nav__link">Sobre</a></li>
+          <!-- Link para a página 'Sobre' -->
+          <li><a href="{% url 'sobre' %}" class="nav__link">Sobre</a></li>
           {% if user.is_authenticated %}
             <li class="nav__link">Olá, {{ user.username }}!</li>
             <li><a href="{% url 'logout' %}" class="nav__link">Logout</a></li>
@@ -27,22 +28,27 @@
             <li><a href="{% url 'register' %}" class="nav__link">Registrar</a></li>
           {% endif %}
         </ul>
-      </nav>      
+      </nav>
+      <!-- Botão para menu mobile -->
       <button class="header__toggle" id="nav-toggle" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
+      <!-- Toggle de tema claro/escuro -->
       <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
         ☾
       </button>
     </div>
   </header>
 
+  <!-- Conteúdo principal -->
   <main class="container">
     {% block content %}{% endblock %}
   </main>
 
+  <!-- Rodapé -->
   <footer class="footer">
     <p>&copy; {{ timezone.now|date:"Y" }} Blog de Animes - Todos os direitos reservados</p>
   </footer>
 </body>
 </html>
+

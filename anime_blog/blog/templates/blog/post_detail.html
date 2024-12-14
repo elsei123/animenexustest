@@ -3,7 +3,10 @@
 {% block content %}
 <article class="post-detail">
   <h2 class="post-detail__title">{{ post.title }}</h2>
-  <p class="post-detail__meta">Por {{ post.author }} em {{ post.created_at|date:"d/m/Y H:i" }}</p>
+  <p class="post-detail__meta">
+    Categoria: {% if post.category %}{{ post.category.name }}{% else %}Sem categoria{% endif %}<br>
+    Por {{ post.author }} em {{ post.created_at|date:"d/m/Y H:i" }}
+  </p>
   {% if post.cover_image %}
     <div class="post-detail__image">
       <img src="{{ post.cover_image.url }}" alt="{{ post.title }}">
@@ -28,6 +31,7 @@
   </ul>
 </section>
 
+<!-- Formulário de comentário -->
 <section class="comment-form">
   <h3>Deixe um Comentário</h3>
   <form method="post">
@@ -37,5 +41,4 @@
     <button type="submit">Enviar</button>
   </form>
 </section>
-
 {% endblock %}

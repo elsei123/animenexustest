@@ -1,12 +1,23 @@
 {% extends "blog/base.html" %}
 {% block title %}Início | Blog de Animes{% endblock %}
 {% block content %}
-
+<!-- Barra de busca e filtro de categorias -->
 <div class="search-bar">
-  <form method="get" action="{% url 'search_posts' %}" style="display:inline;">
-    <input type="text" name="q" placeholder="Buscar posts..." value="{{ request.GET.q|default_if_none:'' }}" aria-label="Buscar posts">
+  <form method="get" style="display:inline;">
+    <input type="text" name="q" placeholder="Buscar posts..." value="{{ query|default_if_none:'' }}" aria-label="Buscar posts">
     <button type="submit">Buscar</button>
   </form>
+</div>
+
+<!-- Filtro de categoria -->
+<div class="category-filter">
+  <span>Filtrar por categoria:</span>
+  <select onchange="location = this.value;">
+    <option value="?">Todas</option>
+    {% for cat in categories %}
+      <option value="?category={{ cat.name }}" {% if category_filter == cat.name %}selected{% endif %}>{{ cat.name }}</option>
+    {% endfor %}
+  </select>
 </div>
 
 <div class="posts-grid" id="posts-container">
@@ -22,6 +33,7 @@
         <a href="{% url 'post_detail' post.pk %}" class="post-card__link">{{ post.title }}</a>
       </h2>
       <p class="post-card__meta">
+        Categoria: {% if post.category %}{{ post.category.name }}{% else %}Sem categoria{% endif %}<br>
         Por {{ post.author }} em {{ post.created_at|date:"d/m/Y" }}
       </p>
       <p class="post-card__excerpt">{{ post.content|truncatewords:30 }}</p>
@@ -32,16 +44,17 @@
   {% endfor %}
 </div>
 
+<!-- Paginação -->
 <div class="pagination">
   {% if page_obj.has_previous %}
-  <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+    <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if category_filter %}&category={{ category_filter }}{% endif %}">Anterior</a>
   {% endif %}
   
   <span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
   
   {% if page_obj.has_next %}
-  <a href="?page={{ page_obj.next_page_number }}">Próxima</a>
+    <a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if category_filter %}&category={{ category_filter }}{% endif %}">Próxima</a>
   {% endif %}
 </div>
-
 {% endblock %}
+

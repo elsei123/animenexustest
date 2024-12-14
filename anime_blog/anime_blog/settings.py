@@ -25,13 +25,13 @@ SECRET_KEY = "django-insecure-^yt(ma9*so08p9_g_v3=p9i)l^48%t9w@lt4-o6b&x%f3c8t=v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["8001-elsei123-animenexustest-ab04z7g0pg.app.codeanywhere.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ['8082-elsei123-animenexustest-ab04z7g0pg.app.codeanywhere.com']
 
 
 CSRF_TRUSTED_ORIGINS = [
     "https://8080-elsei123-animenexustest-ab04z7g0pg.app.codeanywhere.com",
 ]
-
+#https://8080-elsei123-animenexustest-ab04z7g0pg.app.codeanywhere.com
 
 
 # Application definition
@@ -39,12 +39,15 @@ CSRF_TRUSTED_ORIGINS = [
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
+    'django.contrib.contenttypes',  # Assegurar que está presente
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',  # Apenas uma ocorrência
     'blog',
 ]
+
+
+
 
 
 MIDDLEWARE = [
