@@ -1,49 +1,63 @@
-/* ====== Variáveis de Cores ====== */
+/* =====================================================================
+   Estilos Gerais
+   ===================================================================== */
+
+/* Definição das variáveis de cor para facilitar a manutenção */
 :root {
-  --bg-color: #ffffff;
-  --text-color: #222222;
-  --header-bg: #f8f8f8;
-  --footer-bg: #f2f2f2;
-  --card-bg: #ffffff;
-  --primary-color: #3f51b5;
+  /* Modo Claro */
+  --bg-color: #ffffff; /* Cor de fundo principal */
+  --text-color: #222222; /* Cor do texto principal */
+  --header-bg: #f8f8f8; /* Cor de fundo do cabeçalho */
+  --footer-bg: #f2f2f2; /* Cor de fundo do rodapé */
+  --card-bg: #ffffff; /* Cor de fundo dos cards de posts */
+  --primary-color: #3f51b5; /* Cor primária para links e botões */
+  --accent-color: #ff5722; /* Cor de destaque para hover e ações */
+  --overlay-bg: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente para textos sobre imagens */
 }
 
+/* Modo Escuro */
 [data-theme="dark"] {
   --bg-color: #121212;
   --text-color: #eeeeee;
   --header-bg: #1f1f1f;
   --footer-bg: #1f1f1f;
   --card-bg: #1f1f1f;
+  --primary-color: #bb86fc;
+  --accent-color: #ff4081;
+  --overlay-bg: rgba(255, 255, 255, 0.1);
 }
 
-/* ====== Estilos Gerais ====== */
 body {
   margin: 0;
   background: var(--bg-color);
   color: var(--text-color);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
   transition: background 0.3s, color 0.3s;
 }
 
-/* ====== Cabeçalho ====== */
+/* =====================================================================
+   Cabeçalho (Header) e Navegação
+   ===================================================================== */
+
 .header {
   background: var(--header-bg);
-  padding: 1em;
+  padding: 0em 2em;
   border-bottom: 1px solid #ccc;
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
+  box-sizing: border-box;
 }
 
 .header__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
+/* Logo do Site */
 .header__logo .logo {
   text-decoration: none;
   color: var(--text-color);
@@ -51,13 +65,14 @@ body {
   font-weight: bold;
 }
 
+/* Navegação Principal */
 .nav {
   display: flex;
 }
 
 .nav__list {
   display: flex;
-  gap: 1em;
+  gap: 1.5em;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -67,15 +82,24 @@ body {
   text-decoration: none;
   color: var(--text-color);
   font-weight: 500;
+  position: relative;
 }
 
+/* Hover e Ativo nos Links de Navegação */
+.nav__link:hover,
+.nav__link:focus {
+  color: var(--accent-color);
+}
+
+/* Botão de Toggle do Menu Mobile */
 .header__toggle {
-  display: none;
+  display: none; /* Inicialmente escondido */
   background: none;
   border: none;
   cursor: pointer;
 }
 
+/* Barras do Toggle */
 .header__toggle span {
   display: block;
   width: 25px;
@@ -85,49 +109,40 @@ body {
   transition: 0.3s;
 }
 
-/* ====== Menu Mobile ====== */
-@media (max-width: 700px) {
-  .nav {
-    position: absolute;
-    top: 60px;
-    right: 1em;
-    background: var(--header-bg);
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 1em;
-    border: 1px solid #ccc;
-    display: none;
-  }
-  .header__toggle {
-    display: inline-block;
-  }
-  .nav.active {
-    display: flex;
-  }
-}
-
-/* ====== Botão de Tema ====== */
+/* Botão de Toggle de Tema */
 .theme-toggle {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  color: var(--text-color);
+  transition: color 0.3s;
 }
 
-/* ====== Container Principal ====== */
+/* Muda a cor do ícone no modo escuro */
+[data-theme="dark"] .theme-toggle {
+  color: var(--accent-color);
+}
+
+/* =====================================================================
+   Layout Principal e Responsividade
+   ===================================================================== */
+
 .container {
   max-width: 1200px;
-  margin: 6em auto 2em; /* Ajustado para compensar o cabeçalho fixo */
+  margin: 6em auto 2em; /* Espaço extra no topo para o header fixo */
   padding: 0 1em;
+  box-sizing: border-box;
 }
 
-/* ====== Posts Grid ====== */
+/* Grid de Posts */
 .posts-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2em;
 }
 
+/* Card de Post */
 .post-card {
   background: var(--card-bg);
   border: 1px solid #ddd;
@@ -135,16 +150,18 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .post-card:hover {
   transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Imagem do Post */
 .post-card__image img {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
   transition: opacity 0.3s;
 }
@@ -153,9 +170,10 @@ body {
   opacity: 0.95;
 }
 
+/* Conteúdo do Post */
 .post-card__content {
   padding: 1em;
-  flex: 1;
+  flex-grow: 1;
 }
 
 .post-card__title {
@@ -169,7 +187,8 @@ body {
   text-decoration: none;
 }
 
-.post-card__link:hover {
+.post-card__link:hover,
+.post-card__link:focus {
   text-decoration: underline;
 }
 
@@ -181,49 +200,20 @@ body {
 
 .post-card__excerpt {
   margin-bottom: 0;
+  flex-grow: 1;
 }
 
-/* ====== Barra de Busca ====== */
-.search-bar {
-  margin-bottom: 1em;
-  text-align: right;
+/* =====================================================================
+   Página de Detalhes do Post
+   ===================================================================== */
+
+.post-detail {
+  background: var(--card-bg);
+  padding: 2em;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.search-bar input {
-  padding: 0.5em;
-  width: 100%;
-  max-width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-.search-bar button {
-  padding: 0.5em 1em;
-  margin-left: 0.5em;
-  background: var(--primary-color);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 3px;
-  transition: background 0.2s;
-}
-
-.search-bar button:hover {
-  background: #ff5722;
-}
-
-/* ====== Filtro de Categorias ====== */
-.category-filter {
-  margin-bottom: 1em;
-  font-size: 0.9rem;
-}
-
-.category-filter select {
-  padding: 0.3em;
-  margin-left: 0.5em;
-}
-
-/* ====== Post Detail ====== */
 .post-detail__title {
   font-size: 2rem;
   margin-bottom: 0.5em;
@@ -244,14 +234,21 @@ body {
 
 .post-detail__content {
   line-height: 1.6;
+  font-size: 1.1rem;
+  margin-bottom: 2em;
 }
 
-/* ====== Comentários ====== */
-.comments, .comment-form {
+/* =====================================================================
+   Seções de Comentários
+   ===================================================================== */
+
+.comments,
+.comment-form {
   margin-top: 2rem;
 }
 
-.comments h3, .comment-form h3 {
+.comments h3,
+.comment-form h3 {
   margin-bottom: 1rem;
   color: var(--primary-color);
 }
@@ -269,132 +266,95 @@ body {
   margin-bottom: 1em;
   font-size: 0.9rem;
   line-height: 1.4;
+  border-radius: 3px;
 }
 
 .comment-item strong {
-  color: #ff5722;
+  color: var(--accent-color);
 }
 
-.comment-form form {
+/* =====================================================================
+   Formulários de Login, Registro e Comentário
+   ===================================================================== */
+
+form {
   display: flex;
   flex-direction: column;
 }
 
-.comment-form input, .comment-form textarea {
-  padding: 0.5em;
-  margin-bottom: 1rem;
+form input,
+form textarea,
+form select {
+  padding: 0.8em;
+  margin-bottom: 1em;
   border: 1px solid #ccc;
   border-radius: 3px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
 }
 
-.comment-form button {
+form input:focus,
+form textarea:focus,
+form select:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+form button {
   background: var(--primary-color);
   color: #fff;
   border: none;
-  padding: 0.7rem;
+  padding: 0.8em;
   cursor: pointer;
   border-radius: 4px;
+  font-size: 1rem;
   font-weight: 600;
-  transition: background 0.2s;
+  transition: background 0.3s;
 }
 
-.comment-form button:hover {
-  background: #ff5722;
+form button:hover,
+form button:focus {
+  background: var(--accent-color);
 }
 
-/* ====== Paginação ====== */
-.pagination {
-  text-align: center;
-  margin-top: 2rem;
-  font-size: 0.9rem;
-}
+/* =====================================================================
+   Página Sobre
+   ===================================================================== */
 
-.pagination a {
-  text-decoration: none;
-  color: var(--primary-color);
-  margin: 0 0.5rem;
-  transition: color 0.2s;
-}
-
-.pagination a:hover {
-  color: #ff5722;
-}
-
-/* ====== Forms de Autenticação ====== */
-/* Containers para páginas de autenticação (Login, Registrar, Logout) */
-.auth-container {
+.sobre-container {
   min-height: 100vh; /* 100% da altura da janela */
+  background: url('/static/images/sobre-background.jpg') no-repeat center center fixed;
   background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
   box-sizing: border-box;
+  color: #fff;
 }
 
-/* Formulário de Autenticação com fundo semi-transparente */
-.auth-form {
-  background: rgba(0, 0, 0, 0.6); /* Fundo preto semi-transparente */
+.sobre-texto {
+  max-width: 800px;
+  background: var(--overlay-bg); /* Fundo semi-transparente para destacar o texto */
   padding: 2rem;
   border-radius: 10px;
-  max-width: 400px;
-  width: 100%;
-  color: #fff;
-  text-align: center;
 }
 
-.auth-form h2 {
+.sobre-texto h2 {
   margin-top: 0;
-  margin-bottom: 1.5rem;
   font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
-.auth-form input {
-  width: 100%;
-  padding: 0.7em;
-  margin-bottom: 1em;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
+.sobre-texto p {
+  line-height: 1.6;
+  font-size: 1.1rem;
 }
 
-.auth-form button {
-  width: 100%;
-  padding: 0.7em;
-  background: var(--primary-color);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
+/* =====================================================================
+   Rodapé (Footer)
+   ===================================================================== */
 
-.auth-form button:hover {
-  background: #ff5722;
-}
-
-.auth-form p {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-}
-
-.auth-form a {
-  color: var(--primary-color);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.auth-form a:hover {
-  color: #ff5722;
-}
-
-/* ====== Página Sobre ====== */
-/* .sobre-container já foi definido anteriormente */
-
-/* ====== Rodapé ====== */
 .footer {
   text-align: center;
   background: var(--footer-bg);
@@ -406,43 +366,198 @@ body {
   width: 100%;
 }
 
-/* ====== Dark Mode ====== */
-[data-theme="dark"] body {
-  background: #121212;
-  color: #eee;
+/* =====================================================================
+   Barra de Busca e Filtro de Categorias
+   ===================================================================== */
+
+.search-bar {
+  margin-bottom: 1em;
+  text-align: right;
 }
 
-[data-theme="dark"] .header, [data-theme="dark"] .footer {
+.search-bar input {
+  padding: 0.5em;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 1rem;
+}
+
+.search-bar button {
+  padding: 0.5em 1em;
+  margin-left: 0.5em;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.search-bar button:hover,
+.search-bar button:focus {
+  background: var(--accent-color);
+}
+
+/* =====================================================================
+   Filtro de Categorias
+   ===================================================================== */
+
+.category-filter {
+  margin-bottom: 1em;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.category-filter select {
+  padding: 0.3em;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.category-filter select:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+/* =====================================================================
+   Paginação
+   ===================================================================== */
+
+.pagination {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+.pagination a {
+  text-decoration: none;
+  color: var(--primary-color);
+  margin: 0 0.5rem;
+  padding: 0.5em 0.8em;
+  border: 1px solid var(--primary-color);
+  border-radius: 3px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.pagination a:hover,
+.pagination a:focus {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.pagination span {
+  margin: 0 0.5rem;
+}
+
+/* =====================================================================
+   Estilos para Responsividade
+   ===================================================================== */
+
+/* Mobile: telas com largura até 700px */
+@media (max-width: 700px) {
+  /* Ajustes no header */
+  .header__toggle {
+    display: inline-block;
+  }
+
+  .nav {
+    position: absolute;
+    top: 60px; /* Altura aproximada do header */
+    right: 1em;
+    background: var(--header-bg);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1em;
+    border: 1px solid #ccc;
+    display: none; /* Inicialmente escondido */
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .nav.active {
+    display: flex;
+  }
+
+  .nav__list {
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  /* Ajustes no container principal */
+  .container {
+    margin: 5em auto 2em; /* Reduzido para dar espaço ao header fixo */
+  }
+
+  /* Ajustes nos posts */
+  .posts-grid {
+    grid-template-columns: 1fr; /* Uma coluna no mobile */
+  }
+
+  /* Ajustes na página Sobre */
+  .sobre-container {
+    padding: 1rem;
+  }
+
+  .sobre-texto {
+    padding: 1rem;
+  }
+}
+
+/* =====================================================================
+   Transições Suaves
+   ===================================================================== */
+
+a,
+button {
+  transition: color 0.2s, background 0.2s;
+}
+
+.post-card__image img {
+  transition: opacity 0.3s;
+}
+
+/* =====================================================================
+   Dark Mode Transitions
+   ===================================================================== */
+
+[data-theme="dark"] body {
+  background: #121212;
+  color: #eeeeee;
+}
+
+[data-theme="dark"] .header,
+[data-theme="dark"] .footer {
   background: #1f1f1f;
 }
 
-[data-theme="dark"] .post-card, 
+[data-theme="dark"] .post-card,
 [data-theme="dark"] .comment-item,
 [data-theme="dark"] .post-detail__content,
 [data-theme="dark"] form input,
 [data-theme="dark"] form textarea,
-[data-theme="dark"] .auth-form {
-  background: #1f1f1f;
+[data-theme="dark"] .category-filter select {
+  background: var(--card-bg);
   color: #eee;
-  border-color: #3f51b5;
+  border-color: var(--primary-color);
 }
 
-[data-theme="dark"] .post-card__meta {
+[data-theme="dark"] .nav__link {
   color: #bbb;
 }
 
-/* ====== Responsividade ====== */
-/* Ajustes para telas menores */
-@media (max-width: 500px) {
-  .auth-form {
-    padding: 1.5rem;
-  }
+[data-theme="dark"] .nav__link:hover,
+[data-theme="dark"] .nav__link:focus {
+  color: var(--accent-color);
+}
 
-  .auth-form h2 {
-    font-size: 1.5rem;
-  }
-
-  .auth-form input, .auth-form button {
-    font-size: 0.9rem;
-  }
+[data-theme="dark"] .theme-toggle {
+  color: var(--accent-color);
 }
